@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"software_library/backend/api/controllers"
+	"software_library/backend/api/seed"
 
 	"github.com/joho/godotenv"
 )
@@ -27,7 +28,7 @@ func Run() {
 	}
 
 	server.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
-
+	seed.Load(server.DB)
 	server.Run(":1234")
 
 }

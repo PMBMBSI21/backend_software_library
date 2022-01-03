@@ -21,9 +21,9 @@ type User struct {
 	ID        uint32    `gorm:"primary_key;auto_increment" json:"id"`
 	Name      string    `gorm:"size:255;not null" json:"name"`
 	Email     string    `gorm:"size:255;not null;unique" json:"email"`
-	Username  string    `gorm:"size:255;not null;unique" json:"username"`
 	Password  string    `gorm:"size:100;not null;" json:"password"`
-	Foto      string    `gorm:"size:255;not null;unique" json:"foto"`
+	Foto      string    `gorm:"default:'default-user.jpg'" json:"foto"`
+	Level     int       `gorm:"default:1" json:"level"`
 	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
@@ -78,9 +78,6 @@ func (u *User) Validate(action string) error {
 		if u.Name == "" {
 			return errors.New("required Name")
 		}
-		if u.Username == "" {
-			return errors.New("required Username")
-		}
 		if u.Password == "" {
 			return errors.New("required Password")
 		}
@@ -96,7 +93,6 @@ func (u *User) Validate(action string) error {
 
 func (u *User) Prepare() {
 	u.Name = html.EscapeString(strings.TrimSpace(u.Name))
-	u.Username = html.EscapeString(strings.TrimSpace(u.Username))
 	u.Email = html.EscapeString(strings.TrimSpace(u.Email))
 	u.CreatedAt = time.Now()
 	u.UpdatedAt = time.Now()
@@ -139,7 +135,6 @@ func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
 	}
 	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(
 		map[string]interface{}{
-			"username":   u.Username,
 			"password":   u.Password,
 			"updated_at": time.Now(),
 		},
