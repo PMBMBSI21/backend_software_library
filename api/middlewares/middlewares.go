@@ -8,7 +8,16 @@ import (
 )
 
 func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
+
 	return func(w http.ResponseWriter, r *http.Request) {
+		// semua origin mendapat ijin akses
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		// semua method diperbolehkan masuk
+		w.Header().Set("Access-Control-Allow-Methods", "*")
+
+		// semua header diperbolehkan untuk disisipkan
+		w.Header().Set("Access-Control-Allow-Headers", "*")
 		w.Header().Set("Content-Type", "application/json")
 		next(w, r)
 	}

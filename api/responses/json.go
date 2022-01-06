@@ -7,14 +7,6 @@ import (
 )
 
 func JSON(w http.ResponseWriter, statusCode int, data interface{}) {
-	// semua origin mendapat ijin akses
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-
-	// semua method diperbolehkan masuk
-	w.Header().Set("Access-Control-Allow-Methods", "*")
-
-	// semua header diperbolehkan untuk disisipkan
-	w.Header().Set("Access-Control-Allow-Headers", "*")
 
 	w.WriteHeader(statusCode)
 	err := json.NewEncoder(w).Encode(data)
