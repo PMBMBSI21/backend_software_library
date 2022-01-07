@@ -3,14 +3,21 @@ package upload
 import (
 	"fmt"
 	"io"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 func UploadFile(w http.ResponseWriter, r *http.Request, value_name string, folder_name string) (string, error) {
+	if err := godotenv.Load(); err != nil {
+		log.Print("sad .env file found")
+	}
+
 	if err := r.ParseMultipartForm(1024); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return "", err
@@ -52,7 +59,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request, value_name string, folde
 		return "", err
 	}
 
-	databaseValue := fmt.Sprintf("%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("HOST_PORT"), folder_name, filename)
+	databaseValue := fmt.Sprintf("%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("FILE_PORT"), folder_name, filename)
 
 	return databaseValue, nil
 }

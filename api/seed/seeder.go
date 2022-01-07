@@ -15,7 +15,7 @@ func getFile(foldername string, filename string) string {
 		log.Print("sad .env file found")
 	}
 
-	fileLocation := fmt.Sprintf("%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("HOST_PORT"), foldername, filename)
+	fileLocation := fmt.Sprintf("%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("FILE_PORT"), foldername, filename)
 
 	return fileLocation
 }
