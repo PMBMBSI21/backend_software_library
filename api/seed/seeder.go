@@ -1,18 +1,21 @@
 package seed
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"software_library/backend/api/models"
 
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 )
 
 func getFile(foldername string, filename string) string {
-	dir, _ := os.Getwd()
+	if err := godotenv.Load(); err != nil {
+		log.Print("sad .env file found")
+	}
 
-	fileLocation := filepath.Join(dir, "uploads", foldername, filename)
+	fileLocation := fmt.Sprintf("%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("HOST_PORT"), foldername, filename)
 
 	return fileLocation
 }
