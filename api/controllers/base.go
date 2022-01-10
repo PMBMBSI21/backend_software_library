@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"software_library/backend/api/models"
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
@@ -55,7 +54,7 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 	// 	server.DB.Exec("PRAGMA foreign_keys = ON")
 	// }
 
-	server.DB.Debug().AutoMigrate(&models.User{}, &models.Software{}, &models.VideoTutorial{}, &models.DokumenPendukung{}) //database migration
+	// server.DB.Debug().AutoMigrate(&models.User{}, &models.Software{}, &models.VideoTutorial{}, &models.DokumenPendukung{}) //database migration
 
 	server.Router = mux.NewRouter()
 

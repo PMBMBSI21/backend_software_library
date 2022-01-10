@@ -237,19 +237,25 @@ func Load(db *gorm.DB) {
 			log.Fatalf("cannot seed softwares table: %v", err)
 		}
 
-		video[i].SoftwareID = softwares[i].ID
-
-		err = db.Debug().Model(&models.VideoTutorial{}).Create(&video[i]).Error
-		if err != nil {
-			log.Fatalf("cannot seed video table: %v", err)
+		for j, _ := range video {
+			video[j].SoftwareID = softwares[i].ID
+			err = db.Debug().Model(&models.VideoTutorial{}).Create(&video[j]).Error
+			if err != nil {
+				log.Fatalf("cannot seed video table: %v", err)
+			}
+			video[j].ID = 0
 		}
 
-		dokumen[i].SoftwareID = softwares[i].ID
-		dokumen[i].File = softwares[i].Ebook
+		for k, _ := range dokumen {
+			dokumen[k].SoftwareID = softwares[i].ID
+			dokumen[k].File = softwares[i].Ebook
 
-		err = db.Debug().Model(&models.DokumenPendukung{}).Create(&dokumen[i]).Error
-		if err != nil {
-			log.Fatalf("cannot seed dokumen table: %v", err)
+			err = db.Debug().Model(&models.DokumenPendukung{}).Create(&dokumen[k]).Error
+			if err != nil {
+				log.Fatalf("cannot seed dokumen table: %v", err)
+			}
+			dokumen[k].ID = 0
 		}
+
 	}
 }
