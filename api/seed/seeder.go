@@ -48,7 +48,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE01", "example-image.png"),
 		Ebook:          getFile("EXAMPLE01", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 3.0,
 	},
 	models.Software{
@@ -62,7 +62,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE02", "example-image.png"),
 		Ebook:          getFile("EXAMPLE02", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 	models.Software{
@@ -76,7 +76,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE03", "example-image.png"),
 		Ebook:          getFile("EXAMPLE03", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 	models.Software{
@@ -90,7 +90,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE04", "example-image.png"),
 		Ebook:          getFile("EXAMPLE04", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 	models.Software{
@@ -104,7 +104,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE05", "example-image.png"),
 		Ebook:          getFile("EXAMPLE05", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 	models.Software{
@@ -118,7 +118,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE06", "example-image.png"),
 		Ebook:          getFile("EXAMPLE06", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 	models.Software{
@@ -132,7 +132,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE07", "example-image.png"),
 		Ebook:          getFile("EXAMPLE07", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 	models.Software{
@@ -146,7 +146,7 @@ var softwares = []models.Software{
 		Description:    "Example data software",
 		PreviewImage:   getFile("EXAMPLE08", "example-image.png"),
 		Ebook:          getFile("EXAMPLE08", "example-pdf.pdf"),
-		KategoriID:     rand.Intn(5-1) + 1,
+		KategoriID:     uint32(rand.Intn(5-1) + 1),
 		ProductVersion: 5.0,
 	},
 }

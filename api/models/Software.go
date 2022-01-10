@@ -20,7 +20,8 @@ type Software struct {
 	PreviewImage     string  `gorm:"size:255;" json:"PreviewImage"`
 	Ebook            string  `gorm:"size:255;" json:"Ebook"`
 	ProductVersion   float64 `json:"ProductVersion"`
-	KategoriID       int
+	KategoriID       uint32
+	Kategori         Kategori `gorm:"foreignKey:KategoriID"`
 	VideoTutorial    []VideoTutorial
 	DokumenPendukung []DokumenPendukung
 	ReleaseDate      time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"ReleaseDate"`
@@ -38,7 +39,7 @@ func (p *Software) SaveSoftware(db *gorm.DB) (*Software, error) {
 
 func (p *Software) GetAllSoftwares(db *gorm.DB) (*[]Software, error) {
 	Softwares := []Software{}
-	err := db.Debug().Model(&Software{}).Limit(100).Preload("VideoTutorial").Preload("DokumenPendukung").Find(&Softwares).Error
+	err := db.Debug().Model(&Software{}).Limit(100).Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Find(&Softwares).Error
 	if err != nil {
 		return &[]Software{}, err
 	}
@@ -46,7 +47,7 @@ func (p *Software) GetAllSoftwares(db *gorm.DB) (*[]Software, error) {
 }
 
 func (u *Software) GetSoftwareByID(db *gorm.DB, uid uint32) (*Software, error) {
-	err := db.Debug().Model(Software{}).Where("id = ?", uid).Preload("VideoTutorial").Take(&u).Error
+	err := db.Debug().Model(Software{}).Where("id = ?", uid).Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Take(&u).Error
 	if err != nil {
 		return &Software{}, err
 	}
@@ -74,7 +75,7 @@ func (u *Software) UpdateSoftware(db *gorm.DB, uid uint32) (*Software, error) {
 		return &Software{}, db.Error
 	}
 	// This is the display the updated Software
-	err := db.Debug().Model(&Software{}).Where("id = ?", uid).Preload("VideoTutorial").Take(&u).Error
+	err := db.Debug().Model(&Software{}).Where("id = ?", uid).Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Take(&u).Error
 	if err != nil {
 		return &Software{}, err
 	}
