@@ -20,6 +20,7 @@ type Software struct {
 	PreviewImage     string  `gorm:"size:255;" json:"PreviewImage"`
 	Ebook            string  `gorm:"size:255;" json:"Ebook"`
 	ProductVersion   float64 `json:"ProductVersion"`
+	KategoriID       int
 	VideoTutorial    []VideoTutorial
 	DokumenPendukung []DokumenPendukung
 	ReleaseDate      time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"ReleaseDate"`

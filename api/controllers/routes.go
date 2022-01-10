@@ -33,4 +33,11 @@ func (s *Server) initializeRoutes() {
 	s.Router.HandleFunc("/dokumen/{id}", middlewares.SetMiddlewareJSON(s.GetDokumenPendukung)).Methods("GET")
 	s.Router.HandleFunc("/dokumen/{id}", middlewares.SetMiddlewareJSON(s.UpdateDokumenPendukung)).Methods("PUT")
 	s.Router.HandleFunc("/dokumen/{id}", middlewares.SetMiddlewareJSON(s.DeleteDokumenPendukung)).Methods("DELETE")
+
+	// Dokumen routes
+	s.Router.HandleFunc("/kategori", middlewares.SetMiddlewareJSON(s.CreateKategori)).Methods("POST")
+	s.Router.HandleFunc("/kategori", middlewares.SetMiddlewareJSON(s.GetKategoris)).Methods("GET")
+	s.Router.HandleFunc("/kategori/{id}", middlewares.SetMiddlewareJSON(s.GetKategori)).Methods("GET")
+	s.Router.HandleFunc("/kategori/{id}", middlewares.SetMiddlewareJSON(s.UpdateKategori)).Methods("PUT")
+	s.Router.HandleFunc("/kategori/{id}", middlewares.SetMiddlewareJSON(s.DeleteKategori)).Methods("DELETE")
 }

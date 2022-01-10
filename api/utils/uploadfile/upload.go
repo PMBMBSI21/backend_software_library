@@ -59,7 +59,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request, value_name string, folde
 		return "", err
 	}
 
-	databaseValue := fmt.Sprintf("%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("FILE_PORT"), folder_name, filename)
+	databaseValue := fmt.Sprintf("http://%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("FILE_PORT"), folder_name, filename)
 
 	return databaseValue, nil
 }
