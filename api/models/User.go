@@ -75,9 +75,6 @@ func (u *User) Validate(action string) error {
 		return nil
 
 	default:
-		if u.Name == "" {
-			return errors.New("required Name")
-		}
 		if u.Password == "" {
 			return errors.New("required Password")
 		}

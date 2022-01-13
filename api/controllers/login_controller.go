@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"software_library/backend/api/auth"
 	"software_library/backend/api/models"
@@ -13,20 +11,23 @@ import (
 )
 
 func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
+	// body, err := ioutil.ReadAll(r.Body)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
 	user := models.User{}
-	err = json.Unmarshal(body, &user)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
+	// err = json.Unmarshal(body, &user)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
+
+	user.Email = r.FormValue("email")
+	user.Password = r.FormValue("password")
 
 	user.Prepare()
-	err = user.Validate("login")
+	err := user.Validate("login")
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
