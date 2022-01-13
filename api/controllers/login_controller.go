@@ -16,6 +16,16 @@ func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
 	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
 	// 	return
 	// }
+
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Content-Type", "application/json")
 	user := models.User{}
 	// err = json.Unmarshal(body, &user)
 	// if err != nil {
