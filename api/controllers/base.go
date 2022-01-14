@@ -79,11 +79,19 @@ func (server *Server) Run(addr string) {
 
 	// log.Fatal(http.ListenAndServe(addr, server.Router))
 
-	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
 	originsOk := handlers.AllowedOrigins([]string{"*"})
 	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 
 	log.Fatal(http.ListenAndServe(addr, handlers.CORS(originsOk, headersOk, methodsOk)(server.Router)))
+
+	// CORSHandler := cors.New(cors.Options{
+	// 	AllowedOrigins:   []string{"http://localhost:3000"},
+	// 	AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"},
+	// 	AllowedHeaders:   []string{"X-Requested-With", "Content-Type"},
+	// 	AllowCredentials: false,
+	// })
+	// server.Router.Use(CORSHandler)
 }
 
 func testMiddleware(r *mux.Router) mux.MiddlewareFunc {
