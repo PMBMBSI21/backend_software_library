@@ -93,12 +93,3 @@ func (server *Server) Run(addr string) {
 	// })
 	// server.Router.Use(CORSHandler)
 }
-
-func testMiddleware(r *mux.Router) mux.MiddlewareFunc {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-			w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-			next.ServeHTTP(w, req)
-		})
-	}
-}

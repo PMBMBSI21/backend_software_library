@@ -16,6 +16,5 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/joho/godotenv v1.4.0
-	github.com/rs/cors v1.8.2
 	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e
 )
