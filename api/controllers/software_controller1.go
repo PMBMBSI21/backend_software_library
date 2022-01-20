@@ -40,6 +40,8 @@ func (server *Server) CreateSoftware(w http.ResponseWriter, r *http.Request) {
 
 	software.Code = code
 	software.Name = r.FormValue("Name")
+	kategori_id, _ := strconv.ParseUint(r.FormValue("KategoriID"), 10, 32)
+	software.KategoriID = uint32(kategori_id)
 	software.ZipFile, _ = upload.UploadFile(w, r, "ZipFile", code)
 	software.LinkSource = r.FormValue("LinkSource")
 	software.LinkPreview = r.FormValue("LinkPreview")

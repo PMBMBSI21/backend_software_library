@@ -4,7 +4,8 @@ import "software_library/backend/api/middlewares"
 
 func (s *Server) initializeRoutes() {
 	// // Login Route
-	s.Router.HandleFunc("/login", s.Login).Methods("POST")
+	s.Router.HandleFunc("/login", middlewares.SetMiddlewareJSON(s.Login)).Methods("POST")
+	s.Router.HandleFunc("/login", middlewares.SetMiddlewareJSON(s.GetUserLogin)).Methods("GET")
 
 	// Users routes
 	s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.CreateUser)).Methods("POST")

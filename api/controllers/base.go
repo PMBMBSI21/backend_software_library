@@ -79,9 +79,9 @@ func (server *Server) Run(addr string) {
 
 	// log.Fatal(http.ListenAndServe(addr, server.Router))
 
-	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
-	originsOk := handlers.AllowedOrigins([]string{"*"})
-	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "X-CSRF-Token", "X-Custom-Header", "Access-Control-Allow-Origin", "Authorization", "Accept"})
+	originsOk := handlers.AllowedOrigins([]string{"http://localhost:3030"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"})
 
 	log.Fatal(http.ListenAndServe(addr, handlers.CORS(originsOk, headersOk, methodsOk)(server.Router)))
 

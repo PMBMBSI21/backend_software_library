@@ -19,20 +19,20 @@ func (server *Server) CreateKategori(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// body, err := ioutil.ReadAll(r.Body)
-	// if err != nil {
-	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	// }
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	}
 
 	Kategori := models.Kategori{}
 
-	Kategori.Name = r.FormValue("Name")
+	// Kategori.Name = r.FormValue("Name")
 
-	// err = json.Unmarshal(body, &Kategori)
-	// if err != nil {
-	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	// 	return
-	// }
+	err = json.Unmarshal(body, &Kategori)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
 
 	KategoriCreated, err := Kategori.SaveKategori(server.DB)
 

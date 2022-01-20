@@ -14,12 +14,14 @@ func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
 		// w.Header().Set("Access-Control-Allow-Origin", "*")
 		// // w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000/login")
 
+		// w.Header().Set("Access-Control-Allow-Headers", "Authorization")
 		// // semua method diperbolehkan masuk
 		// w.Header().Set("Access-Control-Allow-Methods", "*")
 
 		// // semua header diperbolehkan untuk disisipkan
 		// w.Header().Set("Access-Control-Allow-Headers", "*")
 
+		// w.Header().Set("Content-Type", "*")
 		w.Header().Set("Content-Type", "application/json")
 		next(w, r)
 	}

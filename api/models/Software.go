@@ -10,7 +10,7 @@ import (
 type Software struct {
 	ID               uint32  `gorm:"primary_key;auto_increment" json:"id"`
 	Code             string  `gorm:"size:255;not null" json:"code"`
-	Name             string  `gorm:"size:255;not null" json:"name"`
+	Name             string  `gorm:"size:255;not null" json:"Name"`
 	ZipFile          string  `gorm:"size:255;" json:"ZipFile"`
 	LinkSource       string  `gorm:"size:255;" json:"LinkSource"`
 	LinkPreview      string  `gorm:"size:255;" json:"LinkPreview"`

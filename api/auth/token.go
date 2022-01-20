@@ -75,6 +75,7 @@ func ExtractTokenID(r *http.Request) (uint32, error) {
 	}
 	return 0, nil
 }
+
 func CekAdmin(r *http.Request) (int, error) {
 
 	tokenString := ExtractToken(r)
