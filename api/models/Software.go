@@ -46,6 +46,30 @@ func (p *Software) GetAllSoftwares(db *gorm.DB) (*[]Software, error) {
 	return &Softwares, nil
 }
 
+func (p *Software) GetSoftwareByFilter(db *gorm.DB, keyword string, kategori string) (*[]Software, error) {
+	Softwares := []Software{}
+
+	var err error
+
+	if kategori != "" {
+		err = db.Debug().Model(&Software{}).Where("name like ? and kategori_id = ?", "%"+keyword+"%", kategori).Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Find(&Softwares).Error
+		if err != nil {
+			return &[]Software{}, err
+		}
+	} else {
+		err = db.Debug().Model(&Software{}).Where("name like ?", "%"+keyword+"%").Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Find(&Softwares).Error
+		if err != nil {
+			return &[]Software{}, err
+		}
+	}
+
+	if gorm.IsRecordNotFoundError(err) {
+		return &[]Software{}, errors.New("Software Not Found")
+	}
+
+	return &Softwares, nil
+}
+
 func (u *Software) GetSoftwareByID(db *gorm.DB, uid uint32) (*Software, error) {
 	err := db.Debug().Model(Software{}).Where("id = ?", uid).Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Take(&u).Error
 	if err != nil {

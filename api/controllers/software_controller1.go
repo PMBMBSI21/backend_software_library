@@ -81,12 +81,28 @@ func (server *Server) CreateSoftware(w http.ResponseWriter, r *http.Request) {
 func (server *Server) GetSoftwares(w http.ResponseWriter, r *http.Request) {
 	Software := models.Software{}
 
-	Softwares, err := Software.GetAllSoftwares(server.DB)
-	if err != nil {
-		responses.ERROR(w, http.StatusInternalServerError, err)
-		return
+	search := r.URL.Query().Get("search")
+	kategori := r.URL.Query().Get("category")
+
+	// fmt.Println(search)
+
+	if search != "" || kategori != "" {
+		Softwares, err := Software.GetSoftwareByFilter(server.DB, search, kategori)
+		if err != nil {
+			responses.ERROR(w, http.StatusInternalServerError, err)
+			return
+		}
+		responses.JSON(w, http.StatusOK, Softwares)
+	} else {
+		Softwares, err := Software.GetAllSoftwares(server.DB)
+		if err != nil {
+			responses.ERROR(w, http.StatusInternalServerError, err)
+			return
+		}
+		responses.JSON(w, http.StatusOK, Softwares)
 	}
-	responses.JSON(w, http.StatusOK, Softwares)
+
+	// responses.JSON(w, http.StatusOK, Softwares)
 }
 
 func (server *Server) GetSoftware(w http.ResponseWriter, r *http.Request) {
