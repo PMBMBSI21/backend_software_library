@@ -40,14 +40,28 @@ func (server *Server) CreateSoftware(w http.ResponseWriter, r *http.Request) {
 	software.Name = r.FormValue("Name")
 	kategori_id, _ := strconv.ParseUint(r.FormValue("KategoriID"), 10, 32)
 	software.KategoriID = uint32(kategori_id)
-	software.ZipFile, _ = upload.UploadFile(w, r, "ZipFile", code)
+	if _, _, err := r.FormFile("ZipFile"); err != http.ErrMissingFile {
+		software.ZipFile, _ = upload.UploadFile(w, r, "ZipFile", code)
+	}
 	software.LinkSource = r.FormValue("LinkSource")
 	software.LinkPreview = r.FormValue("LinkPreview")
 	software.LinkTutorial = r.FormValue("LinkTutorial")
 	software.License = r.FormValue("License")
+
+	date, _ := time.Parse(r.FormValue("ReleaseDate"), "2006-01-02T15:04:05.000Z")
+
+	fmt.Println(r.FormValue("ReleaseDate"))
+	fmt.Println(date)
+	software.ReleaseDate = date
+
 	software.Description = r.FormValue("Description")
-	software.PreviewImage, _ = upload.UploadFile(w, r, "PreviewImage", code)
-	software.Ebook, _ = upload.UploadFile(w, r, "Ebook", code)
+	if _, _, err := r.FormFile("PreviewImage"); err != http.ErrMissingFile {
+		software.PreviewImage, _ = upload.UploadFile(w, r, "PreviewImage", code)
+	}
+
+	if _, _, err := r.FormFile("Ebook"); err != http.ErrMissingFile {
+		software.Ebook, _ = upload.UploadFile(w, r, "Ebook", code)
+	}
 
 	productVersion, _ := strconv.ParseFloat(r.FormValue("ProductVersion"), 64)
 	software.ProductVersion = productVersion
@@ -125,29 +139,48 @@ func (server *Server) UpdateSoftware(w http.ResponseWriter, r *http.Request) {
 	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
 	// 	return
 	// }
-	software := models.Software{}
+	// software := models.Software{}
 	// err = json.Unmarshal(body, &software)
 	// if err != nil {
 	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
 	// 	return
 	// }
 
-	software.Name = r.FormValue("Name")
+	Software := models.Software{}
+	SoftwareGotten, err := Software.GetSoftwareByID(server.DB, uint32(uid))
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+
+	println(SoftwareGotten.Code)
+
+	Software.Name = r.FormValue("Name")
 	kategori_id, _ := strconv.ParseUint(r.FormValue("KategoriID"), 10, 32)
-	software.KategoriID = uint32(kategori_id)
-	// software.ZipFile, _ = upload.UploadFile(w, r, "ZipFile", code)
-	software.LinkSource = r.FormValue("LinkSource")
-	software.LinkPreview = r.FormValue("LinkPreview")
-	software.LinkTutorial = r.FormValue("LinkTutorial")
-	software.License = r.FormValue("License")
-	software.Description = r.FormValue("Description")
-	// software.PreviewImage, _ = upload.UploadFile(w, r, "PreviewImage", code)
-	// software.Ebook, _ = upload.UploadFile(w, r, "Ebook", code)
+	Software.KategoriID = uint32(kategori_id)
+
+	if _, _, err := r.FormFile("ZipFile"); err != http.ErrMissingFile {
+		Software.ZipFile, _ = upload.UploadFile(w, r, "ZipFile", SoftwareGotten.Code)
+	}
+
+	Software.LinkSource = r.FormValue("LinkSource")
+	Software.LinkPreview = r.FormValue("LinkPreview")
+	Software.LinkTutorial = r.FormValue("LinkTutorial")
+	Software.License = r.FormValue("License")
+	Software.Description = r.FormValue("Description")
+
+	if _, _, err := r.FormFile("PreviewImage"); err != http.ErrMissingFile {
+		Software.PreviewImage, _ = upload.UploadFile(w, r, "PreviewImage", SoftwareGotten.Code)
+	}
+
+	if _, _, err := r.FormFile("Ebook"); err != http.ErrMissingFile {
+		Software.Ebook, _ = upload.UploadFile(w, r, "Ebook", SoftwareGotten.Code)
+	}
 
 	productVersion, _ := strconv.ParseFloat(r.FormValue("ProductVersion"), 64)
-	software.ProductVersion = productVersion
+	Software.ProductVersion = productVersion
 
-	updatedSoftware, err := software.UpdateSoftware(server.DB, uint32(uid))
+	updatedSoftware, err := Software.UpdateSoftware(server.DB, uint32(uid))
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
 		responses.ERROR(w, http.StatusInternalServerError, formattedError)

@@ -81,3 +81,14 @@ func (u *Software) UpdateSoftware(db *gorm.DB, uid uint32) (*Software, error) {
 	}
 	return u, nil
 }
+
+// func (u *Software) GetSoftwareArray(db *gorm.DB, uid uint32) (*Software, error) {
+// 	err := db.Debug().Model(Software{}).Where("id = ?", uid).Preload("Kategori").Preload("VideoTutorial").Preload("DokumenPendukung").Take(&u).Error
+// 	if err != nil {
+// 		return &Software{}, err
+// 	}
+// 	if gorm.IsRecordNotFoundError(err) {
+// 		return &Software{}, errors.New("Software Not Found")
+// 	}
+// 	return u, err
+// }
