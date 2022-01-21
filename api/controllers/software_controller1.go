@@ -48,11 +48,11 @@ func (server *Server) CreateSoftware(w http.ResponseWriter, r *http.Request) {
 	software.LinkTutorial = r.FormValue("LinkTutorial")
 	software.License = r.FormValue("License")
 
-	date, _ := time.Parse(r.FormValue("ReleaseDate"), "2006-01-02T15:04:05.000Z")
+	// date, _ := time.Parse(r.FormValue("ReleaseDate"), "2006-01-02T15:04:05.000Z")
 
-	fmt.Println(r.FormValue("ReleaseDate"))
-	fmt.Println(date)
-	software.ReleaseDate = date
+	// fmt.Println(r.FormValue("ReleaseDate"))
+	// fmt.Println(date)
+	// software.ReleaseDate = date
 
 	software.Description = r.FormValue("Description")
 	if _, _, err := r.FormFile("PreviewImage"); err != http.ErrMissingFile {
