@@ -21,25 +21,25 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// body, err := ioutil.ReadAll(r.Body)
-	// if err != nil {
-	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	// }
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	}
 	user := models.User{}
-	// err = json.Unmarshal(body, &user)
-	// if err != nil {
-	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	// 	return
-	// }
+	err = json.Unmarshal(body, &user)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
 
-	user.Name = r.FormValue("name")
-	user.Email = r.FormValue("email")
-	user.Password = r.FormValue("password")
-	user.Foto = r.FormValue("foto")
-	user.Level, _ = strconv.Atoi(r.FormValue("level"))
+	// user.Name = r.FormValue("name")
+	// user.Email = r.FormValue("email")
+	// user.Password = r.FormValue("password")
+	// user.Foto = r.FormValue("foto")
+	// user.Level, _ = strconv.Atoi(r.FormValue("level"))
 
 	user.Prepare()
-	err := user.Validate("")
+	err = user.Validate("")
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return

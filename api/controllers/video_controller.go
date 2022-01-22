@@ -19,26 +19,26 @@ func (server *Server) CreateVideoTutorial(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	// body, err := ioutil.ReadAll(r.Body)
-	// if err != nil {
-	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	// }
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	}
 
 	VideoTutorial := models.VideoTutorial{}
 
-	idForm := r.FormValue("id_software")
-	uid, _ := strconv.ParseUint(idForm, 10, 32)
+	// idForm := r.FormValue("id_software")
+	// uid, _ := strconv.ParseUint(idForm, 10, 32)
 
-	VideoTutorial.Title = r.FormValue("Title")
-	VideoTutorial.Url = r.FormValue("Url")
-	VideoTutorial.Description = r.FormValue("Description")
-	VideoTutorial.SoftwareID = uint32(uid)
+	// VideoTutorial.Title = r.FormValue("Title")
+	// VideoTutorial.Url = r.FormValue("Url")
+	// VideoTutorial.Description = r.FormValue("Description")
+	// VideoTutorial.SoftwareID = uint32(uid)
 
-	// err = json.Unmarshal(body, &VideoTutorial)
-	// if err != nil {
-	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	// 	return
-	// }
+	err = json.Unmarshal(body, &VideoTutorial)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
 
 	VideoTutorialCreated, err := VideoTutorial.SaveVideoTutorial(server.DB)
 
