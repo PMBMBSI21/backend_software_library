@@ -57,9 +57,9 @@ func (u *User) Validate(action string) error {
 		if u.Name == "" {
 			return errors.New("required Name")
 		}
-		if u.Foto == "" {
-			return errors.New("required Foto")
-		}
+		// if u.Foto == "" {
+		// 	return errors.New("required Foto")
+		// }
 
 		return nil
 	case "login":

@@ -123,7 +123,7 @@ func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	user.Name = r.FormValue("Name")
-	user.Email = r.FormValue("Email")
+	// user.Email = r.FormValue("Email")
 	user.Password = r.FormValue("Password")
 
 	user.Level, _ = strconv.Atoi(r.FormValue("Level"))
@@ -144,11 +144,11 @@ func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	user.Prepare()
-	err = user.Validate("update")
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
+	// err = user.Validate("update")
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
 	updatedUser, err := user.UpdateUser(server.DB, uint32(uid))
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
