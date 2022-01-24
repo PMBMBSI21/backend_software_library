@@ -90,7 +90,7 @@ func (u *User) Validate(action string) error {
 
 func (u *User) Prepare() {
 	u.Name = html.EscapeString(strings.TrimSpace(u.Name))
-	u.Email = html.EscapeString(strings.TrimSpace(u.Email))
+	// u.Email = html.EscapeString(strings.TrimSpace(u.Email))
 	u.CreatedAt = time.Now()
 	u.UpdatedAt = time.Now()
 }
@@ -123,7 +123,7 @@ func (u *User) GetUserByID(db *gorm.DB, uid uint32) (*User, error) {
 	return u, err
 }
 
-func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
+func (u *User) UpdateUserPassword(db *gorm.DB, uid uint32) (*User, error) {
 
 	// To hash the password
 	err := u.BeforeSave()
@@ -141,6 +141,28 @@ func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
 	}
 	// This is the display the updated user
 	err = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&u).Error
+	if err != nil {
+		return &User{}, err
+	}
+	return u, nil
+}
+
+func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
+	u.UpdatedAt = time.Now()
+
+	if u.Password != "" {
+		err := u.BeforeSave()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(&u)
+	if db.Error != nil {
+		return &User{}, db.Error
+	}
+	// This is the display the updated User
+	err := db.Debug().Model(&User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
