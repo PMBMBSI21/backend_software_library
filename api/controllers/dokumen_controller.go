@@ -125,7 +125,7 @@ func (server *Server) UpdateDokumenPendukung(w http.ResponseWriter, r *http.Requ
 	// 	return
 	// }
 
-	idForm := r.FormValue("id_software")
+	idForm := r.FormValue("SoftwareID")
 	softwareid, _ := strconv.ParseUint(idForm, 10, 32)
 	Software := models.Software{}
 	SoftwareById, err := Software.GetSoftwareByID(server.DB, uint32(softwareid))
