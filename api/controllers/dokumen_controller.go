@@ -34,8 +34,8 @@ func (server *Server) CreateDokumenPendukung(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	DokumenPendukung.Name = r.FormValue("Name")
-	DokumenPendukung.File, _ = upload.UploadFile(w, r, "Dokumen", SoftwareById.Code)
+	DokumenPendukung.Title = r.FormValue("Title")
+	DokumenPendukung.FileDocument, _ = upload.UploadFile(w, r, "FileDocument", SoftwareById.Code)
 	DokumenPendukung.Description = r.FormValue("Description")
 	DokumenPendukung.SoftwareID = uint32(uid)
 
@@ -134,8 +134,8 @@ func (server *Server) UpdateDokumenPendukung(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	DokumenPendukung.Name = r.FormValue("Name")
-	DokumenPendukung.File, _ = upload.UploadFile(w, r, "Dokumen", SoftwareById.Code)
+	DokumenPendukung.Title = r.FormValue("Title")
+	DokumenPendukung.FileDocument, _ = upload.UploadFile(w, r, "FileDocument", SoftwareById.Code)
 	DokumenPendukung.Description = r.FormValue("Description")
 	DokumenPendukung.SoftwareID = uint32(softwareid)
 

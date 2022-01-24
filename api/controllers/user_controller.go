@@ -33,12 +33,12 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 
-	user.Name = r.FormValue("name")
-	user.Email = r.FormValue("email")
-	user.Password = r.FormValue("password")
+	user.Name = r.FormValue("Name")
+	user.Email = r.FormValue("Email")
+	user.Password = r.FormValue("Password")
 
-	if _, _, err := r.FormFile("foto"); err != http.ErrMissingFile {
-		user.Foto, _ = upload.UploadFile(w, r, "foto", "user_profile")
+	if _, _, err := r.FormFile("Foto"); err != http.ErrMissingFile {
+		user.Foto, _ = upload.UploadFile(w, r, "Foto", "user_profile")
 	}
 
 	user.Level, _ = strconv.Atoi(r.FormValue("level"))
@@ -122,14 +122,14 @@ func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 
-	user.Name = r.FormValue("name")
-	user.Email = r.FormValue("email")
-	user.Password = r.FormValue("password")
+	user.Name = r.FormValue("Name")
+	user.Email = r.FormValue("Email")
+	user.Password = r.FormValue("Password")
 
-	user.Level, _ = strconv.Atoi(r.FormValue("level"))
+	user.Level, _ = strconv.Atoi(r.FormValue("Level"))
 
-	if _, _, err := r.FormFile("foto"); err != http.ErrMissingFile {
-		user.Foto, _ = upload.UploadFile(w, r, "foto", "user_profile")
+	if _, _, err := r.FormFile("Foto"); err != http.ErrMissingFile {
+		user.Foto, _ = upload.UploadFile(w, r, "Foto", "user_profile")
 	}
 
 	tokenID, err := auth.ExtractTokenID(r)
