@@ -25,7 +25,7 @@ func (server *Server) CreateDokumenPendukung(w http.ResponseWriter, r *http.Requ
 
 	DokumenPendukung := models.DokumenPendukung{}
 
-	idForm := r.FormValue("id_software")
+	idForm := r.FormValue("SoftwareID")
 	uid, _ := strconv.ParseUint(idForm, 10, 32)
 	Software := models.Software{}
 	SoftwareById, err := Software.GetSoftwareByID(server.DB, uint32(uid))
