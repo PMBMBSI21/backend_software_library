@@ -10,6 +10,7 @@ import (
 	"software_library/backend/api/models"
 	"software_library/backend/api/responses"
 	"software_library/backend/api/utils/formaterror"
+	upload "software_library/backend/api/utils/uploadfile"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -21,25 +22,29 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-	}
+	// body, err := ioutil.ReadAll(r.Body)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// }
 	user := models.User{}
-	err = json.Unmarshal(body, &user)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
+	// err = json.Unmarshal(body, &user)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
+
+	user.Name = r.FormValue("name")
+	user.Email = r.FormValue("email")
+	user.Password = r.FormValue("password")
+
+	if _, _, err := r.FormFile("foto"); err != http.ErrMissingFile {
+		user.Foto, _ = upload.UploadFile(w, r, "foto", "user_profile")
 	}
 
-	// user.Name = r.FormValue("name")
-	// user.Email = r.FormValue("email")
-	// user.Password = r.FormValue("password")
-	// user.Foto = r.FormValue("foto")
-	// user.Level, _ = strconv.Atoi(r.FormValue("level"))
+	user.Level, _ = strconv.Atoi(r.FormValue("level"))
 
 	user.Prepare()
-	err = user.Validate("")
+	err := user.Validate("")
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
@@ -105,17 +110,28 @@ func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusBadRequest, err)
 		return
 	}
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
+	// body, err := ioutil.ReadAll(r.Body)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
 	user := models.User{}
-	err = json.Unmarshal(body, &user)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
+	// err = json.Unmarshal(body, &user)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
+
+	user.Name = r.FormValue("name")
+	user.Email = r.FormValue("email")
+	user.Password = r.FormValue("password")
+
+	user.Level, _ = strconv.Atoi(r.FormValue("level"))
+
+	if _, _, err := r.FormFile("foto"); err != http.ErrMissingFile {
+		user.Foto, _ = upload.UploadFile(w, r, "foto", "user_profile")
 	}
+
 	tokenID, err := auth.ExtractTokenID(r)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnauthorized, errors.New("Unauthorized"))
