@@ -171,19 +171,19 @@ var video = []models.VideoTutorial{
 
 var dokumen = []models.DokumenPendukung{
 	models.DokumenPendukung{
-		Name:        "Example Document 1",
+		Title:       "Example Document 1",
 		Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
 	},
 	models.DokumenPendukung{
-		Name:        "Example Document 2",
+		Title:       "Example Document 2",
 		Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
 	},
 	models.DokumenPendukung{
-		Name:        "Example Document 3",
+		Title:       "Example Document 3",
 		Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
 	},
 	models.DokumenPendukung{
-		Name:        "Example Document 4",
+		Title:       "Example Document 4",
 		Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
 	},
 }
@@ -248,7 +248,7 @@ func Load(db *gorm.DB) {
 
 		for k, _ := range dokumen {
 			dokumen[k].SoftwareID = softwares[i].ID
-			dokumen[k].File = softwares[i].Ebook
+			dokumen[k].FileDocument = softwares[i].Ebook
 
 			err = db.Debug().Model(&models.DokumenPendukung{}).Create(&dokumen[k]).Error
 			if err != nil {
