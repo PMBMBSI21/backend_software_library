@@ -232,9 +232,20 @@ func (server *Server) UpdateDownloadSoftware(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
+	Kategori := models.Kategori{}
+
 	println(SoftwareGotten.Code)
 
 	Software.TotalDownload = int(SoftwareGotten.TotalDownload) + 1
+
+	Kategori.TotalDownload = int(SoftwareGotten.Kategori.TotalDownload) + 1
+
+	_, err = Kategori.UpdateKategori(server.DB, SoftwareGotten.KategoriID)
+	if err != nil {
+		formattedError := formaterror.FormatError(err.Error())
+		responses.ERROR(w, http.StatusInternalServerError, formattedError)
+		return
+	}
 
 	updatedSoftware, err := Software.UpdateSoftware(server.DB, uint32(uid))
 	if err != nil {

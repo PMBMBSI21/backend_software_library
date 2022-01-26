@@ -20,7 +20,7 @@ type Software struct {
 	PreviewImage     string  `gorm:"size:255;" json:"PreviewImage"`
 	Ebook            string  `gorm:"size:255;" json:"Ebook"`
 	ProductVersion   float64 `json:"ProductVersion"`
-	TotalDownload    int     `gorm:"size:255;" json:"TotalDownload"`
+	TotalDownload    int     `json:"TotalDownload"`
 	KategoriID       uint32
 	Kategori         Kategori `gorm:"foreignKey:KategoriID"`
 	VideoTutorial    []VideoTutorial
