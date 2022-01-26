@@ -204,3 +204,43 @@ func (server *Server) UpdateSoftware(w http.ResponseWriter, r *http.Request) {
 	}
 	responses.JSON(w, http.StatusOK, updatedSoftware)
 }
+
+func (server *Server) UpdateDownloadSoftware(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	uid, err := strconv.ParseUint(vars["id"], 10, 32)
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	// body, err := ioutil.ReadAll(r.Body)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
+	// software := models.Software{}
+	// err = json.Unmarshal(body, &software)
+	// if err != nil {
+	// 	responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	// 	return
+	// }
+
+	Software := models.Software{}
+	SoftwareGotten, err := Software.GetSoftwareByID(server.DB, uint32(uid))
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+
+	println(SoftwareGotten.Code)
+
+	Software.TotalDownload = int(SoftwareGotten.TotalDownload) + 1
+
+	updatedSoftware, err := Software.UpdateSoftware(server.DB, uint32(uid))
+	if err != nil {
+		formattedError := formaterror.FormatError(err.Error())
+		responses.ERROR(w, http.StatusInternalServerError, formattedError)
+		return
+	}
+	responses.JSON(w, http.StatusOK, updatedSoftware)
+}
