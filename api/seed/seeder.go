@@ -26,12 +26,14 @@ var users = []models.User{
 		Name:     "Administrator",
 		Email:    "admin@gmail.com",
 		Password: "admin",
+		Foto:     getFile("user_profile", "avatar-default.png"),
 		Level:    2,
 	},
 	models.User{
 		Name:     "User 1",
 		Email:    "user@gmail.com",
 		Password: "user",
+		Foto:     getFile("user_profile", "avatar-default.png"),
 		Level:    1,
 	},
 }

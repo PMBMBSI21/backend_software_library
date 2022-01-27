@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 	"software_library/backend/api/auth"
 	"software_library/backend/api/models"
 	"software_library/backend/api/responses"
@@ -14,9 +16,13 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
+	if err := godotenv.Load(); err != nil {
+		log.Print("sad .env file found")
+	}
 	if r.Method != "POST" {
 		http.Error(w, "", http.StatusBadRequest)
 		return
@@ -39,6 +45,9 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if _, _, err := r.FormFile("Foto"); err != http.ErrMissingFile {
 		user.Foto, _ = upload.UploadFile(w, r, "Foto", "user_profile")
+	} else {
+		databaseValue := fmt.Sprintf("http://%s%s/uploads/%s/%s", os.Getenv("HOST_NAME"), os.Getenv("FILE_PORT"), "user_profile", "avatar-default.png")
+		user.Foto = databaseValue
 	}
 
 	user.Level, _ = strconv.Atoi(r.FormValue("level"))
