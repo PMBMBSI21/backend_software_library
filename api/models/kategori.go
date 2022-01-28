@@ -26,7 +26,7 @@ func (p *Kategori) SaveKategori(db *gorm.DB) (*Kategori, error) {
 
 func (p *Kategori) GetAllKategoris(db *gorm.DB) (*[]Kategori, error) {
 	Kategoris := []Kategori{}
-	err := db.Debug().Model(&Kategori{}).Limit(100).Preload("SoftwareID").Find(&Kategoris).Error
+	err := db.Debug().Model(&Kategori{}).Limit(100).Preload("SoftwareID").Order("total_download desc").Find(&Kategoris).Error
 	if err != nil {
 		return &[]Kategori{}, err
 	}
