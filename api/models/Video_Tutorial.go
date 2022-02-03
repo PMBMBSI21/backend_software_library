@@ -11,7 +11,7 @@ type VideoTutorial struct {
 	ID          uint32 `gorm:"primary_key;auto_increment" json:"id"`
 	Title       string `gorm:"size:255;not null" json:"Title"`
 	Url         string `gorm:"size:255;not null" json:"Url"`
-	Description string `gorm:"size:255;not null" json:"Description"`
+	Description string `gorm:"type:text" json:"Description"`
 	SoftwareID  uint32
 	CreatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`

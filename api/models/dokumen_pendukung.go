@@ -11,7 +11,7 @@ type DokumenPendukung struct {
 	ID           uint32 `gorm:"primary_key;auto_increment" json:"id"`
 	Title        string `gorm:"size:255;not null" json:"Title"`
 	FileDocument string `gorm:"size:255;not null" json:"FileDocument"`
-	Description  string `gorm:"size:255;not null" json:"Description"`
+	Description  string `gorm:"type:text" json:"Description"`
 	SoftwareID   uint32
 	CreatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`

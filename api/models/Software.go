@@ -16,7 +16,7 @@ type Software struct {
 	LinkPreview      string  `gorm:"size:255;" json:"LinkPreview"`
 	LinkTutorial     string  `gorm:"size:255;" json:"LinkTutorial"`
 	License          string  `gorm:"size:255;" json:"License"`
-	Description      string  `gorm:"size:255;" json:"Description"`
+	Description      string  `gorm:"type:text" json:"Description"`
 	PreviewImage     string  `gorm:"size:255;" json:"PreviewImage"`
 	Ebook            string  `gorm:"size:255;" json:"Ebook"`
 	ProductVersion   float64 `json:"ProductVersion"`
