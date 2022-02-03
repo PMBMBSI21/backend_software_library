@@ -135,7 +135,9 @@ func (server *Server) UpdateDokumenPendukung(w http.ResponseWriter, r *http.Requ
 	}
 
 	DokumenPendukung.Title = r.FormValue("Title")
-	DokumenPendukung.FileDocument, _ = upload.UploadFile(w, r, "FileDocument", SoftwareById.Code)
+	if _, _, err := r.FormFile("FileDocument"); err != http.ErrMissingFile {
+		DokumenPendukung.FileDocument, _ = upload.UploadFile(w, r, "FileDocument", SoftwareById.Code)
+	}
 	DokumenPendukung.Description = r.FormValue("Description")
 	DokumenPendukung.SoftwareID = uint32(softwareid)
 
